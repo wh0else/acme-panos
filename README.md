@@ -9,6 +9,8 @@ Remember to rename `.env.example` → `.env` and fill in all required environmen
 
 > **Note:** The `HTTPS_INSECURE` variable in `.env` disables TLS verification for both ACME requests and PAN-OS deployment steps. Use this only if necessary and only in trusted environments.
 
+In PAN-OS 9.1+ create a new admin role with API permissions to import and commit. Create a user that will only be used for the purpose of deploying certs. Assign this user to the role you created.
+
 ## 2. Run the Required Commands
 
 Execute the following commands in order:
