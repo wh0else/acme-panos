@@ -1,0 +1,36 @@
+services:
+  acme-panos:
+    image: acme-panos:latest
+    container_name: acme-panos
+    restart: unless-stopped
+
+    environment:
+      # ACME configuration
+      HOME: /config
+      LE_WORKING_DIR: /config
+      ENABLE_CRON: "true"
+      HTTPS_INSECURE: "true" # Can remove this if your PAN device mgmt interface has a valid certificate
+
+      # DNS Provider (Domeneshop) - your existing env names
+      DOMENESHOP_Token: ${DOMENESHOP_Token}
+      DOMENESHOP_Secret: ${DOMENESHOP_Secret}
+
+      # Palo Alto deploy hook credentials
+      PANOS_HOST: ${PANOS_HOST}
+      PANOS_USER: ${PANOS_USER}
+      PANOS_PASS: ${PANOS_PASS}
+
+    volumes:
+      - ./config:/config
+
+    command: >
+      bash -c "
+        # Start cron in foreground
+        crond -f -d 8
+      "
+
+    healthcheck:
+      test: ["CMD", "test", "-x", "/root/.acme.sh/acme.sh"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
