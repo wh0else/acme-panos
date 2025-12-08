@@ -1,6 +1,6 @@
 services:
   acme-panos:
-    image: acme-panos:latest
+    image: wh0else/acme-panos:latest
     container_name: acme-panos
     restart: unless-stopped
 
