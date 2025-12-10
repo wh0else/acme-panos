@@ -18,10 +18,10 @@ Execute the following commands in order:
 ```bash
 docker compose up -d
 
-docker compose run --rm acme-panos --set-default-ca --server letsencrypt
+docker exec acme-panos --set-default-ca --server letsencrypt
 
-docker compose run --rm acme-panos --register-account -m <mail address>
+docker exec acme-panos --register-account -m <mail address>
 
-docker compose run --rm acme-panos --issue -d <domain.tld> --dns dns_domeneshop
+docker exec acme-panos --issue -d <domain.tld> --dns dns_domeneshop
 
-docker compose run --rm acme-panos --deploy -d <domain.tld> --deploy-hook panos --insecure
+docker exec acme-panos --deploy -d <domain.tld> --deploy-hook panos --insecure
