@@ -19,7 +19,9 @@ services:
       PANOS_HOST: ${PANOS_HOST}
       PANOS_USER: ${PANOS_USER}
       PANOS_PASS: ${PANOS_PASS}
-
+      PANOS_TEMPLATE: ${PANOS_TEMPLATE}
+      PANOS_TEMPLATE_STACK: ${PANOS_TEMPLATE_STACK}
+      
     volumes:
       - ./config:/config
 
