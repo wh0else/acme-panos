@@ -1,16 +1,16 @@
 services:
   acme-panos:
-    image: wh0else/acme-panos:latest
+    image: neilpang/acme.sh
     container_name: acme-panos
     restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./out:/acme.sh
+    command: daemon
+    stdin_open: true
+    tty: true
 
     environment:
-      # ACME configuration
-      HOME: /config
-      LE_WORKING_DIR: /config
-      ENABLE_CRON: "true"
-      HTTPS_INSECURE: "true" # Can remove this if your PAN device mgmt interface has a valid certificate
-
       # DNS Provider (Domeneshop) - your existing env names
       DOMENESHOP_Token: ${DOMENESHOP_Token}
       DOMENESHOP_Secret: ${DOMENESHOP_Secret}
@@ -21,18 +21,5 @@ services:
       PANOS_PASS: ${PANOS_PASS}
       PANOS_TEMPLATE: ${PANOS_TEMPLATE}
       PANOS_TEMPLATE_STACK: ${PANOS_TEMPLATE_STACK}
-      
-    volumes:
-      - ./config:/config
 
-    command: >
-      bash -c "
-        # Start cron in foreground
-        crond -f -d 8
-      "
-
-    healthcheck:
-      test: ["CMD", "test", "-x", "/root/.acme.sh/acme.sh"]
-      interval: 1m
-      timeout: 5s
-      retries: 3
+      HTTPS_INSECURE: "true" # Can remove this if your PAN device mgmt interface has a valid certificate
